@@ -33,6 +33,12 @@ if(POLICY CMP0042)
 	cmake_policy(SET CMP0042 OLD) # MACOSX_RPATH migration
 endif()
 
+if (NOT LIB_INSTALL_DIR)
+  set(LIB_INSTALL_DIR "lib")
+  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(LIB_INSTALL_DIR ${LIB_INSTALL_DIR}64)
+  endif ()
+endif ()
 
 #
 # User Options
@@ -212,7 +218,7 @@ include_directories(${HEADER_PATH})
 
 install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
 
 # ---------------------------------------------------------------------------
 # Google Test Application
